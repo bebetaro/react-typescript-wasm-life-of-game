@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./5ade3bf22893a9bebaae.module.wasm"
   },
   {
-    "revision": "6f40b83af3f78133182a2fa4807c0f23",
+    "revision": "59a009bc4ff438cf875c026f5ab3e1a9",
     "url": "./index.html"
   },
   {
