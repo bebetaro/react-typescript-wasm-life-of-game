@@ -1,11 +1,11 @@
 .root {
-  padding: 15px 0;
+  padding: 15px;
 }
 
 .button {
   width: 100px;
   height: 40px;
-  background-color: "gray";
-  color: "white";
+  background-color: darkslategray;
+  color: whitesmoke;
   border-radius: 4px;
 }

@@ -15,7 +15,11 @@ export const AppContainer = () => {
   useEffect(() => {
     try {
       import("wasm-game-of-life/wasm_game_of_life").then((wasm) => {
-        setUniverse(wasm.Universe.new());
+        const width = window.matchMedia("(min-width:640px)").matches ? 128 : 64;
+        const height = window.matchMedia("(min-width:640px)").matches
+          ? 128
+          : 64;
+        setUniverse(wasm.Universe.new(width, height));
       });
 
       import("wasm-game-of-life/wasm_game_of_life_bg.wasm").then((wasmBg) => {

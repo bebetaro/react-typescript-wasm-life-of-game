@@ -2,7 +2,6 @@ mod utils;
 
 extern crate js_sys;
 
-
 use std::fmt;
 use wasm_bindgen::prelude::*;
 
@@ -20,11 +19,11 @@ pub enum Cell {
     Alive = 1,
 }
 
-impl Cell{
-    fn toggle(&mut self){
-        *self = match *self{
-            Cell::Dead=>Cell::Alive,
-            Cell::Alive=>Cell::Dead
+impl Cell {
+    fn toggle(&mut self) {
+        *self = match *self {
+            Cell::Dead => Cell::Alive,
+            Cell::Alive => Cell::Dead,
         };
     }
 }
@@ -56,60 +55,52 @@ impl Universe {
     fn get_index(&self, row: u32, column: u32) -> usize {
         (row * self.width + column) as usize
     }
-    
-   fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
-    let mut count = 0;
 
-    let north = if row == 0 {
-        self.height - 1
-    } else {
-        row - 1
-    };
+    fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
+        let mut count = 0;
 
-    let south = if row == self.height - 1 {
-        0
-    } else {
-        row + 1
-    };
+        let north = if row == 0 { self.height - 1 } else { row - 1 };
 
-    let west = if column == 0 {
-        self.width - 1
-    } else {
-        column - 1
-    };
+        let south = if row == self.height - 1 { 0 } else { row + 1 };
 
-    let east = if column == self.width - 1 {
-        0
-    } else {
-        column + 1
-    };
+        let west = if column == 0 {
+            self.width - 1
+        } else {
+            column - 1
+        };
 
-    let nw = self.get_index(north, west);
-    count += self.cells[nw] as u8;
+        let east = if column == self.width - 1 {
+            0
+        } else {
+            column + 1
+        };
 
-    let n = self.get_index(north, column);
-    count += self.cells[n] as u8;
+        let nw = self.get_index(north, west);
+        count += self.cells[nw] as u8;
 
-    let ne = self.get_index(north, east);
-    count += self.cells[ne] as u8;
+        let n = self.get_index(north, column);
+        count += self.cells[n] as u8;
 
-    let w = self.get_index(row, west);
-    count += self.cells[w] as u8;
+        let ne = self.get_index(north, east);
+        count += self.cells[ne] as u8;
 
-    let e = self.get_index(row, east);
-    count += self.cells[e] as u8;
+        let w = self.get_index(row, west);
+        count += self.cells[w] as u8;
 
-    let sw = self.get_index(south, west);
-    count += self.cells[sw] as u8;
+        let e = self.get_index(row, east);
+        count += self.cells[e] as u8;
 
-    let s = self.get_index(south, column);
-    count += self.cells[s] as u8;
+        let sw = self.get_index(south, west);
+        count += self.cells[sw] as u8;
 
-    let se = self.get_index(south, east);
-    count += self.cells[se] as u8;
+        let s = self.get_index(south, column);
+        count += self.cells[s] as u8;
 
-    count
-}
+        let se = self.get_index(south, east);
+        count += self.cells[se] as u8;
+
+        count
+    }
     pub fn tick(&mut self) {
         let mut next = self.cells.clone();
 
@@ -139,10 +130,10 @@ impl Universe {
         self.cells = next
     }
 
-    pub fn new() -> Universe {
+    pub fn new(_width: u32, _height: u32) -> Universe {
         utils::set_panic_hook();
-        let width = 128;
-        let height = 128;
+        let width = _width;
+        let height = _height;
 
         let cells = (0..width * height)
             .map(|_| {
@@ -173,7 +164,7 @@ impl Universe {
         self.height = height;
         self.cells = (0..self.width * height).map(|_i| Cell::Dead).collect();
     }
-    pub fn toggle_cell(&mut self, row:u32, column:u32){
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
         let idx = self.get_index(row, column);
         self.cells[idx].toggle();
     }
