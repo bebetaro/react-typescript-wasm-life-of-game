@@ -10,7 +10,7 @@ export const useRenderGame = (
   calculate: () => void
 ) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationId = useRef<number>(0);
+  const animationId = useRef<number>(Infinity);
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -23,17 +23,17 @@ export const useRenderGame = (
       universe.tick();
       drawGrid(ctx, size);
       drawCells(universe, memory, size, ctx);
-      animationId.current = requestAnimationFrame(renderLoop);
+      if (isPlay) {
+        animationId.current = requestAnimationFrame(renderLoop);
+      } else {
+        cancelAnimationFrame(animationId.current);
+        animationId.current = Infinity;
+      }
     };
     drawGrid(ctx, size);
     drawCells(universe, memory, size, ctx);
 
-    if (isPlay) {
-      renderLoop();
-    } else {
-      cancelAnimationFrame(animationId.current);
-      animationId.current = 0;
-    }
+    renderLoop();
   }, [universe, memory, isPlay, calculate]);
 
   const onToggleCanvas = useCallback(
