@@ -12,7 +12,7 @@ This project is based on [wasm-game-of-life](https://github.com/rustwasm/wasm_ga
 However I use TypeScript and React for Web part.
 
 You can modify my code freely and if you find bugs or points which should be improved.
-Please notice my by issue of this repo.
+Please notice me by issue of this repo.
 
 ## Usage
 
